@@ -10,17 +10,25 @@ import UIKit
 
 class QuestionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var tableView: UITableView = UITableView(frame: UIScreen.mainScreen().bounds, style: UITableViewStyle.Plain)
+    //MARK: - Accessors
+    
+    lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: UIScreen.mainScreen().bounds, style: UITableViewStyle.Plain)
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        tableView.rowHeight = 66
+        
+        tableView.registerClass(QuestionTableViewCell.self, forCellReuseIdentifier: QuestionTableViewCell.reuseIdentifier())
+        
+        return tableView
+    }()
     
     //MARK: - ViewLifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
- 
-        tableView.dataSource = self
-        tableView.delegate = self
-        
-        tableView.registerClass(QuestionTableViewCell.self, forCellReuseIdentifier: QuestionTableViewCell.reuseIdentifier())
         
         self.view.addSubview(tableView)
     }
@@ -28,13 +36,20 @@ class QuestionViewController: UIViewController, UITableViewDelegate, UITableView
     //MARK: - UITableViewDataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 80
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell:QuestionTableViewCell = tableView.dequeueReusableCellWithIdentifier(QuestionTableViewCell.reuseIdentifier(), forIndexPath: indexPath) as! QuestionTableViewCell
         
-        cell.backgroundColor = UIColor.redColor()
+        cell.titleLabel.text = "Title: \(indexPath.row)"
+        cell.authorLabel.text = "Author: \(indexPath.row)"
+        
+        /*---------------------*/
+        
+        cell.layoutByApplyingConstraints()
+        
+        /*---------------------*/
         
         return cell
     }

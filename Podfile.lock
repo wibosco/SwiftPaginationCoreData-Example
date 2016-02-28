@@ -1,0 +1,16 @@
+PODS:
+  - CoreDataServices (1.1.3)
+  - FetchedResultsController (1.0.0)
+  - PureLayout (3.0.1)
+
+DEPENDENCIES:
+  - CoreDataServices
+  - FetchedResultsController
+  - PureLayout
+
+SPEC CHECKSUMS:
+  CoreDataServices: ca1e442e4d7b3913886f2293f92568f995d0e3e4
+  FetchedResultsController: 950fcdb1ad05616b38a9a28cefe99af9242441ff
+  PureLayout: f35f5384c9c4e4479df041dbe33ad7577b71ddfb
+
+COCOAPODS: 0.39.0
