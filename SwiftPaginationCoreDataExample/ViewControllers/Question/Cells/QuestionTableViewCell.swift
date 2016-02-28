@@ -15,13 +15,13 @@ class QuestionTableViewCell: UITableViewCell {
     //MARK: - Accessors
     
     lazy var titleLabel : UILabel = {
-        let label = UILabel()
+        let label = UILabel.newAutoLayoutView()
         
         return label
     }()
     
     var authorLabel : UILabel = {
-        let label = UILabel()
+        let label = UILabel.newAutoLayoutView()
         
         return label
     }()
