@@ -12,11 +12,30 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
+    var window: UIWindow? = {
+        let window = UIWindow.init(frame: UIScreen.mainScreen().bounds)
+        window.backgroundColor = UIColor.whiteColor()
+        window.clipsToBounds = false
+        
+        return window
+    }()
+    
+    lazy var navigationController: UINavigationController = {
+        let navigationController = UINavigationController.init(rootViewController: self.questionViewController)
+        
+        return navigationController
+    }()
 
+    lazy var questionViewController : QuestionViewController = {
+        let questionViewController = QuestionViewController()
+        
+        return questionViewController
+    }()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        self.window!.rootViewController = self.navigationController
+        self.window!.makeKeyAndVisible()
+        
         return true
     }
 

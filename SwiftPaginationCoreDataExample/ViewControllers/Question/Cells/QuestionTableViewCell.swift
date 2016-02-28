@@ -22,7 +22,7 @@ class QuestionTableViewCell: UITableViewCell {
         return label
     }()
     
-    var authorLabel : UILabel = {
+    lazy var authorLabel : UILabel = {
         let label = UILabel.newAutoLayoutView()
         label.font = UIFont.systemFontOfSize(15)
         
@@ -71,7 +71,6 @@ class QuestionTableViewCell: UITableViewCell {
     //MARK: - ReuseIdentifier
     
     class func reuseIdentifier() -> String {
-        NSNotificationCenter.defaultCenter()
         return NSStringFromClass(QuestionTableViewCell.self)
     }
     
