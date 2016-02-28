@@ -56,5 +56,9 @@ class QuestionViewController: UIViewController, UITableViewDelegate, UITableView
     
     //MARK: - UITableViewDelegate
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
 }
 
