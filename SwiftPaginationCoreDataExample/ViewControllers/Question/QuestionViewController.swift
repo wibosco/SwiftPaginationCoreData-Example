@@ -25,12 +25,30 @@ class QuestionViewController: UIViewController, UITableViewDelegate, UITableView
         return tableView
     }()
     
+    lazy var feed: Feed = {
+        return Feed.questionFeed();
+    }()
+    
     //MARK: - ViewLifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Questions"
+        
         self.view.addSubview(tableView)
+    }
+    
+    //MARK: DataRetrieval
+    
+    func refresh(){
+        QuestionsAPIManager.retrieveQuestions(self.feed, refresh: true, completion: nil)
+    }
+    
+    func pagination(){
+        QuestionsAPIManager.retrieveQuestions(self.feed, refresh: false) { (successful) -> Void in
+            //Remove pagination view
+        }
     }
     
     //MARK: - UITableViewDataSource

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Automatic">
+    <entity name="Feed" representedClassName=".Feed" syncable="YES"/>
+    <entity name="Page" representedClassName=".Page" syncable="YES"/>
+    <entity name="Question" representedClassName=".Question" syncable="YES"/>
+    <elements>
+        <element name="Feed" positionX="-63" positionY="-18" width="128" height="45"/>
+        <element name="Page" positionX="-54" positionY="-9" width="128" height="45"/>
+        <element name="Question" positionX="-36" positionY="9" width="128" height="45"/>
+    </elements>
+</model>
