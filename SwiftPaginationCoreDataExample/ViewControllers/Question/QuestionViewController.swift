@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreDataServices
 
 class QuestionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -26,7 +27,15 @@ class QuestionViewController: UIViewController, UITableViewDelegate, UITableView
     }()
     
     lazy var feed: Feed = {
-        return Feed.questionFeed();
+        var feed = Feed.questionFeed()
+        
+        if (feed == nil) {
+            feed = NSEntityDescription.cds_insertNewObjectForEntityForClass(Feed.self, inManagedObjectContext: CDSServiceManager.sharedInstance().mainManagedObjectContext) as? Feed
+            
+            CDSServiceManager.sharedInstance().saveMainManagedObjectContext()
+        }
+        
+        return feed!
     }()
     
     //MARK: - ViewLifecycle
@@ -39,13 +48,19 @@ class QuestionViewController: UIViewController, UITableViewDelegate, UITableView
         self.view.addSubview(tableView)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.refresh()
+    }
+    
     //MARK: DataRetrieval
     
-    func refresh(){
+    func refresh() {
         QuestionsAPIManager.retrieveQuestions(self.feed, refresh: true, completion: nil)
     }
     
-    func pagination(){
+    func pagination() {
         QuestionsAPIManager.retrieveQuestions(self.feed, refresh: false) { (successful) -> Void in
             //Remove pagination view
         }

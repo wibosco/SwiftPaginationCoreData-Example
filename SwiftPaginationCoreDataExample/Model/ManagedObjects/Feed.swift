@@ -10,16 +10,31 @@ import Foundation
 import CoreData
 import CoreDataServices
 
+let kStackOverflowQuestionsBaseURL: NSString = "https://api.stackexchange.com/2.2/questions?site=stackoverflow"
+
 class Feed: NSManagedObject {
 
     //MARK: QuestionFeed
     
-    class func questionFeed() -> Feed {
+    class func questionFeed() -> Feed? {
         return Feed.questionFeed(CDSServiceManager.sharedInstance().mainManagedObjectContext)
     }
     
-    class func questionFeed(managedObjectContext: NSManagedObjectContext) -> Feed {
-        return managedObjectContext.cds_retrieveFirstEntryForEntityClass(Feed.self) as! Feed
+    class func questionFeed(managedObjectContext: NSManagedObjectContext) -> Feed? {
+        return managedObjectContext.cds_retrieveFirstEntryForEntityClass(Feed.self) as? Feed
+    }
+    
+    //MARK: Pages
+    
+    func orderedPages() -> NSArray {
+        let indexSort = NSSortDescriptor(key: "index", ascending: true)
+        
+        return (self.pages?.sortedArrayUsingDescriptors([indexSort]))!
+    }
+    
+    func addPage(page: Page) {
+        let mutablePages = self.mutableSetValueForKey("pages")
+        mutablePages.addObject(page)
     }
 
 }
