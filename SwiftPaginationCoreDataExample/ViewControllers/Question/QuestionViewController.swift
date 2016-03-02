@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreDataServices
+import FetchedResultsController
 
 class QuestionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -36,6 +37,27 @@ class QuestionViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         return feed!
+    }()
+    
+    lazy var fetchedResultsController: FRCTableViewFetchedResultsController = {
+        let fetchRequest = NSFetchRequest.cds_fetchRequestWithEntityClass(Question.self)
+        
+        let pageIndexSort = NSSortDescriptor(key: "index", ascending: true)
+        let questionIndexSort = NSSortDescriptor(key: "index", ascending: true)
+        
+        fetchRequest.sortDescriptors = [pageIndexSort, questionIndexSort]
+        
+        let fetchedResultsController = FRCTableViewFetchedResultsController.init(fetchRequest: fetchRequest, managedObjectContext: CDSServiceManager.sharedInstance().mainManagedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        fetchedResultsController.tableView = self.tableView
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let error as NSError {
+            print("Failed to load \(error.localizedDescription)")
+        }
+        
+        return fetchedResultsController
     }()
     
     //MARK: - ViewLifecycle
@@ -69,14 +91,27 @@ class QuestionViewController: UIViewController, UITableViewDelegate, UITableView
     //MARK: - UITableViewDataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 80
+        return (self.fetchedResultsController.fetchedObjects?.count)!
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell:QuestionTableViewCell = tableView.dequeueReusableCellWithIdentifier(QuestionTableViewCell.reuseIdentifier(), forIndexPath: indexPath) as! QuestionTableViewCell
         
-        cell.titleLabel.text = "Title: \(indexPath.row)"
-        cell.authorLabel.text = "Author: \(indexPath.row)"
+        let question = self.fetchedResultsController.fetchedObjects![indexPath.row] as! Question
+        
+        cell.titleLabel.text = question.title
+        cell.authorLabel.text = question.author
+        
+        /*---------------------*/
+        
+        let numberOfRowsInSection = tableView.numberOfRowsInSection(indexPath.section)
+        let paginationTriggerIndex = numberOfRowsInSection - 10
+        
+        let triggerPagination = indexPath.row >= min(paginationTriggerIndex, numberOfRowsInSection-1)
+        
+        if (triggerPagination) {
+            self.pagination()
+        }
         
         /*---------------------*/
         

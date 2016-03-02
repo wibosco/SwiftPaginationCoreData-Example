@@ -17,14 +17,14 @@ class QuestionTableViewCell: UITableViewCell {
     lazy var titleLabel : UILabel = {
         let label = UILabel.newAutoLayoutView()
         label.numberOfLines = 2
-        label.font = UIFont.boldSystemFontOfSize(16)
+        label.font = UIFont.boldSystemFontOfSize(15)
         
         return label
     }()
     
     lazy var authorLabel : UILabel = {
         let label = UILabel.newAutoLayoutView()
-        label.font = UIFont.systemFontOfSize(15)
+        label.font = UIFont.systemFontOfSize(14)
         
         return label
     }()
