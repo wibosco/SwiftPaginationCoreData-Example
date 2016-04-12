@@ -36,6 +36,8 @@ class QuestionTableViewCell: UITableViewCell {
         
         self.contentView.addSubview(self.titleLabel)
         self.contentView.addSubview(self.authorLabel)
+        
+        self.contentView.backgroundColor = UIColor.whiteColor()
     }
     
     required init?(coder aDecoder: NSCoder) {

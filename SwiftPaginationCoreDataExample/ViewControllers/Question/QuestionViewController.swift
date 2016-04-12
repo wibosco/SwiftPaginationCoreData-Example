@@ -7,20 +7,25 @@
 //
 
 import UIKit
+import CoreData
 import CoreDataServices
 import FetchedResultsController
 
-class QuestionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class QuestionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, TableViewFetchedResultsControllerDelegate {
     
     //MARK: - Accessors
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: UIScreen.mainScreen().bounds, style: UITableViewStyle.Plain)
         
+        tableView.backgroundColor = UIColor.whiteColor()
+        
         tableView.dataSource = self
         tableView.delegate = self
         
         tableView.rowHeight = 66
+        
+        tableView.addSubview(self.pullToRefreshControl)
         
         tableView.registerClass(QuestionTableViewCell.self, forCellReuseIdentifier: QuestionTableViewCell.reuseIdentifier())
         
@@ -31,25 +36,26 @@ class QuestionViewController: UIViewController, UITableViewDelegate, UITableView
         var feed = Feed.questionFeed()
         
         if (feed == nil) {
-            feed = NSEntityDescription.cds_insertNewObjectForEntityForClass(Feed.self, inManagedObjectContext: CDSServiceManager.sharedInstance().mainManagedObjectContext) as? Feed
+            feed = NSEntityDescription.insertNewObjectForEntity(Feed.self, managedObjectContext: ServiceManager.sharedInstance.mainManagedObjectContext) as? Feed
             
-            CDSServiceManager.sharedInstance().saveMainManagedObjectContext()
+            ServiceManager.sharedInstance.saveMainManagedObjectContext()
         }
         
         return feed!
     }()
     
-    lazy var fetchedResultsController: FRCTableViewFetchedResultsController = {
-        let fetchRequest = NSFetchRequest.cds_fetchRequestWithEntityClass(Question.self)
+    lazy var fetchedResultsController: TableViewFetchedResultsController = {
+        let fetchRequest = NSFetchRequest.fetchRequest(Question.self)
         
         let pageIndexSort = NSSortDescriptor(key: "index", ascending: true)
         let questionIndexSort = NSSortDescriptor(key: "index", ascending: true)
         
         fetchRequest.sortDescriptors = [pageIndexSort, questionIndexSort]
         
-        let fetchedResultsController = FRCTableViewFetchedResultsController.init(fetchRequest: fetchRequest, managedObjectContext: CDSServiceManager.sharedInstance().mainManagedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        let fetchedResultsController = TableViewFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: ServiceManager.sharedInstance.mainManagedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         
         fetchedResultsController.tableView = self.tableView
+        fetchedResultsController.dataDelegate = self
         
         do {
             try fetchedResultsController.performFetch()
@@ -58,6 +64,14 @@ class QuestionViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         return fetchedResultsController
+    }()
+    
+    lazy var pullToRefreshControl: UIRefreshControl = {
+        let pullToRefreshControl = UIRefreshControl()
+        
+        pullToRefreshControl.addTarget(self, action: #selector(QuestionViewController.pullToRefreshDragged(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        
+        return pullToRefreshControl
     }()
     
     //MARK: - ViewLifecycle
@@ -79,12 +93,20 @@ class QuestionViewController: UIViewController, UITableViewDelegate, UITableView
     //MARK: DataRetrieval
     
     func refresh() {
-        QuestionsAPIManager.retrieveQuestions(self.feed, refresh: true, completion: nil)
+        QuestionsAPIManager.retrieveQuestions(self.feed, refresh: true) { (successful) in
+            
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(5 * Double(NSEC_PER_SEC)))
+            dispatch_after(delayTime, dispatch_get_main_queue(), {
+                self.pullToRefreshControl.endRefreshing()
+            })
+            
+            print("refreshed")
+        }
     }
     
     func pagination() {
         QuestionsAPIManager.retrieveQuestions(self.feed, refresh: false) { (successful) -> Void in
-            //Remove pagination view
+            print("paginated")
         }
     }
     
@@ -128,5 +150,16 @@ class QuestionViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
+    //MARK: - PullToRefresh
+    
+    func pullToRefreshDragged(sender: UIRefreshControl) {
+        self.refresh()
+    }
+    
+    //MARK: TableViewFetchedResultsControllerDelegate
+    
+    func didUpdateContent() {
+        self.pullToRefreshControl.endRefreshing()
+    }
 }
 

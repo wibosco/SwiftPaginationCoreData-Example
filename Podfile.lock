@@ -1,6 +1,8 @@
 PODS:
-  - CoreDataServices (1.1.3)
-  - FetchedResultsController (1.0.0)
+  - ConvenientFileManager (2.0.7)
+  - CoreDataServices (2.0.6):
+    - ConvenientFileManager (~> 2.0)
+  - FetchedResultsController (2.0.7)
   - PureLayout (3.0.1)
 
 DEPENDENCIES:
@@ -9,8 +11,9 @@ DEPENDENCIES:
   - PureLayout
 
 SPEC CHECKSUMS:
-  CoreDataServices: ca1e442e4d7b3913886f2293f92568f995d0e3e4
-  FetchedResultsController: 950fcdb1ad05616b38a9a28cefe99af9242441ff
+  ConvenientFileManager: fbe505538cff2822268d451e6c5644d5651d93d2
+  CoreDataServices: 2e5547400800d78218975abc8c094e69d6726b4f
+  FetchedResultsController: f544a05211979a24d9880a52021334d26d59112a
   PureLayout: f35f5384c9c4e4479df041dbe33ad7577b71ddfb
 
 COCOAPODS: 0.39.0

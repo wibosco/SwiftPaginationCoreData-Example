@@ -17,11 +17,11 @@ class Feed: NSManagedObject {
     //MARK: QuestionFeed
     
     class func questionFeed() -> Feed? {
-        return Feed.questionFeed(CDSServiceManager.sharedInstance().mainManagedObjectContext)
+        return Feed.questionFeed(ServiceManager.sharedInstance.mainManagedObjectContext)
     }
     
     class func questionFeed(managedObjectContext: NSManagedObjectContext) -> Feed? {
-        return managedObjectContext.cds_retrieveFirstEntryForEntityClass(Feed.self) as? Feed
+        return managedObjectContext.retrieveFirstEntry(Feed.self) as? Feed
     }
     
     //MARK: Pages

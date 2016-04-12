@@ -40,14 +40,14 @@ class QuestionsRetrievalOperation: NSOperation {
         do {
             let jsonResponse = try NSJSONSerialization.JSONObjectWithData(self.data, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
             
-            CDSServiceManager.sharedInstance().backgroundManagedObjectContext.performBlockAndWait({ () -> Void in
+            ServiceManager.sharedInstance.backgroundManagedObjectContext.performBlockAndWait({ () -> Void in
                 let parser = QuestionsParser()
                 let page = parser.parseQuestions(jsonResponse) as Page
                 
                 do {
                     print("self.feedID: \(self.feedID)")
                     
-                    let feed = try CDSServiceManager.sharedInstance().backgroundManagedObjectContext.existingObjectWithID(self.feedID) as! Feed
+                    let feed = try ServiceManager.sharedInstance.backgroundManagedObjectContext.existingObjectWithID(self.feedID) as! Feed
                     
                     let nextPageNumber = (feed.pages?.count)! + 1
                     
@@ -66,7 +66,7 @@ class QuestionsRetrievalOperation: NSOperation {
                     
                     /*----------------*/
                     
-                    CDSServiceManager.sharedInstance().saveBackgroundManagedObjectContext()
+                    ServiceManager.sharedInstance.saveBackgroundManagedObjectContext()
                     
                 } catch let error as NSError {
                     print("Failed to load: \(error.localizedDescription)")
