@@ -41,7 +41,7 @@ class QuestionsRetrievalOperation: NSOperation {
             let jsonResponse = try NSJSONSerialization.JSONObjectWithData(self.data, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
             
             ServiceManager.sharedInstance.backgroundManagedObjectContext.performBlockAndWait({ () -> Void in
-                let parser = QuestionsParser()
+                let parser = QuestionsParser(managedObjectContext: ServiceManager.sharedInstance.backgroundManagedObjectContext)
                 let page = parser.parseQuestions(jsonResponse) as Page
                 
                 do {

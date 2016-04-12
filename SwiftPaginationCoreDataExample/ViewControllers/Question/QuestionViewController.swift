@@ -57,6 +57,9 @@ class QuestionViewController: UIViewController, UITableViewDelegate, UITableView
         fetchedResultsController.tableView = self.tableView
         fetchedResultsController.dataDelegate = self
         
+        fetchedResultsController.insertRowAnimation = .None
+        fetchedResultsController.deleteRowAnimation = .None
+        
         do {
             try fetchedResultsController.performFetch()
         } catch let error as NSError {

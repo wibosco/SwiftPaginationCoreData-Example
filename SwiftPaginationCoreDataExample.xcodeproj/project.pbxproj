@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4382EFD01CBD4B5E00A1C4A2 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4382EFCF1CBD4B5E00A1C4A2 /* Parser.swift */; };
+		4382EFD11CBD4B5E00A1C4A2 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4382EFCF1CBD4B5E00A1C4A2 /* Parser.swift */; };
 		439C0B5C1C85EBF8003D6C79 /* Question+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439C0B5B1C85EBF8003D6C79 /* Question+CoreDataProperties.swift */; };
 		43D61E3D1C846CCC00B45A6C /* QuestionsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D61E3C1C846CCC00B45A6C /* QuestionsParser.swift */; };
 		43D61E431C84A4AB00B45A6C /* Page+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D61E401C84A4AB00B45A6C /* Page+CoreDataProperties.swift */; };
@@ -39,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		1DC2CAD78C60EDB28DE71B12 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		4382EFCF1CBD4B5E00A1C4A2 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		439C0B5B1C85EBF8003D6C79 /* Question+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Question+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		43D61E3C1C846CCC00B45A6C /* QuestionsParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionsParser.swift; sourceTree = "<group>"; };
 		43D61E401C84A4AB00B45A6C /* Page+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Page+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -83,6 +86,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4382EFCD1CBD4B4800A1C4A2 /* Abstract */ = {
+			isa = PBXGroup;
+			children = (
+				4382EFCE1CBD4B4800A1C4A2 /* Parser */,
+			);
+			path = Abstract;
+			sourceTree = "<group>";
+		};
+		4382EFCE1CBD4B4800A1C4A2 /* Parser */ = {
+			isa = PBXGroup;
+			children = (
+				4382EFCF1CBD4B5E00A1C4A2 /* Parser.swift */,
+			);
+			path = Parser;
+			sourceTree = "<group>";
+		};
 		43D61E3A1C846CB100B45A6C /* Parsers */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,6 +223,7 @@
 		F4F5A5741C83B9E8005DEDF1 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				4382EFCD1CBD4B4800A1C4A2 /* Abstract */,
 				F4F5A5751C83B9E8005DEDF1 /* Questions */,
 			);
 			path = Networking;
@@ -418,6 +438,7 @@
 			files = (
 				43D61E431C84A4AB00B45A6C /* Page+CoreDataProperties.swift in Sources */,
 				F4F5A5771C83B9FC005DEDF1 /* QueueManager.swift in Sources */,
+				4382EFD01CBD4B5E00A1C4A2 /* Parser.swift in Sources */,
 				F4F5A58B1C83BAC6005DEDF1 /* Feed.swift in Sources */,
 				439C0B5C1C85EBF8003D6C79 /* Question+CoreDataProperties.swift in Sources */,
 				F4F5A58F1C83C010005DEDF1 /* QuestionsRetrievalOperation.swift in Sources */,
@@ -437,6 +458,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4382EFD11CBD4B5E00A1C4A2 /* Parser.swift in Sources */,
 				F4BFB2EF1C8227FB00DECA5E /* SwiftPaginationCoreDataExampleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

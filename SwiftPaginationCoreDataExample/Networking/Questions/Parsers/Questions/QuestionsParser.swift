@@ -10,12 +10,12 @@ import UIKit
 import CoreData
 import CoreDataServices
 
-class QuestionsParser: NSObject {
+class QuestionsParser: Parser {
     
     //MARK: Questions
     
     func parseQuestions(questionsRetrievalResponse: NSDictionary) -> Page {
-        let page = NSEntityDescription.insertNewObjectForEntity(Page.self, managedObjectContext: ServiceManager.sharedInstance.backgroundManagedObjectContext) as! Page
+        let page = NSEntityDescription.insertNewObjectForEntity(Page.self, managedObjectContext: self.localManagedObjectContext) as! Page
         
         let questionResponses = questionsRetrievalResponse["items"]
         
@@ -40,12 +40,12 @@ class QuestionsParser: NSObject {
     func parseQuestion(questionResponse: NSDictionary) -> Question {
         let questionID = questionResponse["question_id"] as! NSInteger
         
-        let predicate = NSPredicate(format: "questionID == %d", questionID)
+        let predicate = NSPredicate(format: "questionID == \(questionID)")
         
-        var question = ServiceManager.sharedInstance.backgroundManagedObjectContext.retrieveFirstEntry(Question.self, predicate: predicate) as? Question
+        var question = self.localManagedObjectContext.retrieveFirstEntry(Question.self, predicate: predicate) as? Question
         
         if (question == nil) {
-            question = NSEntityDescription.insertNewObjectForEntity(Question.self, managedObjectContext: ServiceManager.sharedInstance.backgroundManagedObjectContext) as? Question
+            question = NSEntityDescription.insertNewObjectForEntity(Question.self, managedObjectContext: self.localManagedObjectContext) as? Question
             
             question?.questionID = questionID
         }
