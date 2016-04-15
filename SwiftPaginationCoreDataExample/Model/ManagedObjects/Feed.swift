@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 import CoreDataServices
 
-let kStackOverflowQuestionsBaseURL: NSString = "https://api.stackexchange.com/2.2/questions?site=stackoverflow"
+let kStackOverflowQuestionsBaseURL: NSString = "https://api.stackexchange.com/2.2/questions?order=desc&sort=creation&site=stackoverflow"
 
 class Feed: NSManagedObject {
 
